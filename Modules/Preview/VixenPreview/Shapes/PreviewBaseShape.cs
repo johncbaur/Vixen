@@ -48,26 +48,31 @@ namespace VixenModules.Preview.VixenPreview.Shapes
 				FireOnPropertiesChanged(this, this);
 			}
 		}
+		
 		/// <summary>
 		/// Display name for the type of shape.
 		/// </summary>
 		[Browsable(false)]
 		public virtual string TypeName => @"Shape";
+
 		/// <summary>
 		/// Top most pixel location
 		/// </summary>
 		[Browsable(false)]
         public abstract int Top { get; set; }
+
 		/// <summary>
 		/// Bottom most pixel location
 		/// </summary>
         [Browsable(false)]
         public abstract int Bottom { get; }
+
 		/// <summary>
 		/// Left most pixel location
 		/// </summary>
         [Browsable(false)]
         public abstract int Left { get; set; }
+
 		/// <summary>
 		/// Right most pixel location
 		/// </summary>
@@ -82,6 +87,7 @@ namespace VixenModules.Preview.VixenPreview.Shapes
         public PreviewBaseShape Parent { get; set; }
 
 		private double _zoomLevel = 1;
+
 		[Browsable(false)]
 		public virtual double ZoomLevel
 		{
@@ -103,6 +109,7 @@ namespace VixenModules.Preview.VixenPreview.Shapes
 			get { return _selected; }
 			set { _selected = value; }
 		}
+
 		public virtual void Select(bool selectDragPoints)
 		{
 			Selected = true;
@@ -118,6 +125,7 @@ namespace VixenModules.Preview.VixenPreview.Shapes
 			if (_selectPoints != null)
 				_selectPoints.Clear();
 		}
+
 		public void SetSelectPoints(List<PreviewPoint> selectPoints, List<PreviewPoint> skewPoints)
 		{
 			_selectPoints = selectPoints;
@@ -135,6 +143,7 @@ namespace VixenModules.Preview.VixenPreview.Shapes
 			var rect = new Rect(xMin, yMin, xMax - xMin, yMax - yMin);
 			return rect;
 		}
+
 		public virtual void Draw(Bitmap b, bool editMode, HashSet<Guid> highlightedElements)
 		{
 			throw new NotImplementedException();
@@ -312,7 +321,7 @@ namespace VixenModules.Preview.VixenPreview.Shapes
 			}
 			else if (GetType().ToString() == "VixenModules.Preview.VixenPreview.Shapes.PreviewMovingHead")
 			{
-				Debug.Assert(false, "SetupControl not supported for Moving Heads");
+				setupControl = new PreviewShapeBaseSetupControl(this);
 			}
 
 			return setupControl;

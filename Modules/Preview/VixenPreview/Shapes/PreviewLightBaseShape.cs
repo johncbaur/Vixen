@@ -1,22 +1,17 @@
-﻿using System;
+﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using System.Windows;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using Vixen.Sys;
 using VixenModules.Preview.VixenPreview.OpenGL.Constructs;
 using VixenModules.Preview.VixenPreview.OpenGL.Constructs.Shaders;
 using VixenModules.Preview.VixenPreview.OpenGL.Constructs.Vertex;
-using Point = System.Drawing.Point;
 
 namespace VixenModules.Preview.VixenPreview.Shapes
 {
@@ -91,8 +86,8 @@ namespace VixenModules.Preview.VixenPreview.Shapes
 				_stringType = value;
 				_isHighPrecision = _stringType == StringTypes.Custom;
 				if (_strings != null) {
-					foreach (var line in Strings) {
-						line.StringType = _stringType;
+					foreach (var line in _strings) {
+						((PreviewLightBaseShape)line).StringType = _stringType;
 					}
 				}
 			}
