@@ -328,24 +328,10 @@ namespace VixenApplication.Setup.ElementTemplates
 
 		public IEnumerable<ElementNode> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
 		{
-			// *** Put Wizard Stuff here! ***
-			//await _wizardService.ShowWizardAsync<ExampleWizard>();
-
-			//IDependencyResolver dependencyResolver = this.GetDependencyResolver();
-
-			// DOES NOT WORK!			
-			StyleHelper.CreateStyleForwardersForDefaultStyles();
-
-			Application curApp = Application.Current;
-			curApp.ApplyTheme();
-
-			ShowWizard = new TaskCommand<Type>(OnShowWizardxEecuteAsync);
-
-			ShowWizard.Execute(typeof(ExampleSideNavigationWizard));			
+			// Stuff I tried that did not work
 			
-
-			//
-
+			//await _wizardService.ShowWizardAsync<ExampleWizard>();
+			//IDependencyResolver dependencyResolver = this.GetDependencyResolver();
 			//Task task = OnShowWizardxEecuteAsync(typeof(ExampleSideNavigationWizard));
 			//task.Wait();
 
@@ -354,14 +340,27 @@ namespace VixenApplication.Setup.ElementTemplates
 			//Task task = wizardService.ShowWizardAsync<ExampleSideNavigationWizard>();
 			//task.Start();
 			//task.Wait();
-			
 
+
+
+
+			// DOES NOT WORK!	
+			/*		
+			StyleHelper.CreateStyleForwardersForDefaultStyles();
+
+			Application curApp = Application.Current;
+			curApp.ApplyTheme();
+
+			ShowWizard = new TaskCommand<Type>(OnShowWizardxEecuteAsync);
+
+			ShowWizard.Execute(typeof(ExampleSideNavigationWizard));			
+			*/
 
 			// WORKS!
-			//Orc.Wizard.Example.Views.MainView mainView = new Orc.Wizard.Example.Views.MainView();
-			//mainView.ShowDialog();
+			Orc.Wizard.Example.Views.MainView mainView = new Orc.Wizard.Example.Views.MainView();
+			mainView.ShowDialog();
 			// END WORKS!
-			
+
 			bool isLampFixture = true;
 			
 			// Create the new display element node
