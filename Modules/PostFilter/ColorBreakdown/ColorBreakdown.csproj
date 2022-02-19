@@ -26,6 +26,16 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="ColorBreakdownMixingFilter.cs" />
+    <Compile Remove="ColorBreakdownModuleSAIKO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ColorBreakdownModule .cs.Latest" />
+    <None Remove="ColorBreakdownModule.cs Jon" />
+    <None Remove="ColorBreakdownModule.cs WorksWAltAlgorithm" />
+    <None Remove="ColorBreakdownOutput.cs.Latest" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>

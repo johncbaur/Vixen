@@ -164,5 +164,8 @@ namespace VixenApplication.Setup.ElementTemplates
 			textBoxFirstPrefix.Text = textBoxSecondPrefix.Text;
 			textBoxSecondPrefix.Text = temp;
 		}
+
+		public bool ConfigureColor => true;
+		public bool ConfigureDimming => true;
 	}
 }

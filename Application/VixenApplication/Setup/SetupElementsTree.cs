@@ -253,17 +253,24 @@ namespace VixenApplication.Setup
 						return;
 					}
 
-					var question = new MessageBoxForm("Would you like to configure a dimming curve for this Prop?", "Dimming Curve Setup", MessageBoxButtons.YesNo, SystemIcons.Question);
-					var response = question.ShowDialog(this);
-					if (response == DialogResult.OK)
+					if (template.ConfigureDimming)
 					{
-						DimmingCurveHelper dimmingHelper = new DimmingCurveHelper(true);
-						dimmingHelper.Perform(createdElements);
+						var question = new MessageBoxForm("Would you like to configure a dimming curve for this Prop?",
+							"Dimming Curve Setup", MessageBoxButtons.YesNo, SystemIcons.Question);
+						var response = question.ShowDialog(this);
+						if (response == DialogResult.OK)
+						{
+							DimmingCurveHelper dimmingHelper = new DimmingCurveHelper(true);
+							dimmingHelper.Perform(createdElements);
+						}
 					}
 
-					ColorSetupHelper helper = new ColorSetupHelper();
-					helper.SetColorType(ElementColorType.FullColor);
-					helper.Perform(createdElements);
+					if (template.ConfigureColor)
+					{
+						ColorSetupHelper helper = new ColorSetupHelper();
+						helper.SetColorType(ElementColorType.FullColor);
+						helper.Perform(createdElements);
+					}
 
 					elementTree.AddNodePathToTree(new []{createdElements.First()});
 					OnElementsChanged(new ElementsChangedEventArgs(ElementsChangedEventArgs.ElementsChangedAction.Add));

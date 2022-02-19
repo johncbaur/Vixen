@@ -132,5 +132,8 @@ namespace VixenApplication.Setup.ElementTemplates
 			btn.BackgroundImage = Resources.ButtonBackgroundImage;
 
 		}
+
+		public bool ConfigureColor => true;
+		public bool ConfigureDimming => true;
 	}
 }

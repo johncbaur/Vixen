@@ -95,7 +95,9 @@ namespace VixenApplication.Setup.ElementTemplates
 		{
 			var btn = (Button)sender;
 			btn.BackgroundImage = Resources.ButtonBackgroundImage;
-
 		}
+
+		public bool ConfigureColor => true;
+		public bool ConfigureDimming => true;
     }
 }

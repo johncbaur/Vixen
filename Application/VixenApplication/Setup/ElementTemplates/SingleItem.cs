@@ -44,5 +44,8 @@ namespace VixenApplication.Setup.ElementTemplates
 			ElementNode newNode = ElementNodeService.Instance.CreateSingle(null, itemName);
 			return new[] {newNode};
 		}
+
+		public bool ConfigureColor => true;
+		public bool ConfigureDimming => true;
 	}
 }

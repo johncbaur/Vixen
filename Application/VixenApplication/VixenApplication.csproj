@@ -51,21 +51,68 @@
       <Private>false</Private>
       <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\Orc.Wizard\Orc.Wizard.csproj" />
     <ProjectReference Include="..\..\Common\Resources\Resources.csproj">
       <Private>false</Private>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\App\FixtureSpecificationManager\FixtureSpecificationManager.csproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\App\Fixture\Fixture.csproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\App\Modeling\Modeling.csproj">
       <Private>false</Private>
       <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Editor\FixtureWizard\FixtureWizard.csproj" />
+    <ProjectReference Include="..\..\Modules\PostFilter\ColorBreakdown\ColorBreakdown.csproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\PostFilter\ColorWheelFilter\ColorWheelFilter.csproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\PostFilter\DimmingCurve\DimmingCurve.csproj">
       <Private>false</Private>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\PostFilter\DimmingFilter\DimmingFilter.csproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\PostFilter\HighLowByteFilter\CoarseFineBreakdown.csproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\PostFilter\ShutterFilter\ShutterFilter.csproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\PostFilter\TaggedFilter\TaggedFilter.csproj">
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
       <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\Property\Color\Color.csproj">
       <Private>false</Private>
       <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\Property\Fixture\IntelligentFixture.csproj">
+      <IncludeAssets>None</IncludeAssets>
+      <Private>false</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\Property\Order\Order.csproj">
       <Private>false</Private>
@@ -426,10 +473,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Catel.Core" Version="5.12.2">
+    <PackageReference Include="Catel.Core" Version="5.12.10">
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="DataGridThemes" Version="1.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1">
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -146,5 +146,8 @@ namespace VixenApplication.Setup.ElementTemplates
 			else if (!int.TryParse(e.KeyChar.ToString(), out isNum))
 				e.Handled = true;
 		}
+
+		public bool ConfigureColor => true;
+		public bool ConfigureDimming => true;
 	}
 }
