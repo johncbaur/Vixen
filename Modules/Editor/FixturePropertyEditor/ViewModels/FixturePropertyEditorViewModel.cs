@@ -378,7 +378,13 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 				InitializeChildViewModels(fixtureSpecification);
 			}
 
-			((Command)(ParentViewModel as FixturePropertyEditorWindowViewModel).OkCommand).RaiseCanExecuteChanged();
+			// Check to see if this control is being used in the context of the Fixture Property Editor 
+			// (It is also being used in the Fixture Wizard where this logic is not necessary)
+			if (ParentViewModel is FixturePropertyEditorWindowViewModel)
+			{		
+				// Refresh the enabled status of the OK button
+				((Command)(ParentViewModel as FixturePropertyEditorWindowViewModel).OkCommand).RaiseCanExecuteChanged();
+			}
 		}
 
 		/// <summary>

@@ -51,8 +51,8 @@ namespace VixenModules.Editor.FixturePropertyEditor.Views
 		/// <param name="e">Event arguments</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			FixturePropertyEditorWindowViewModel vm = ViewModel as FixturePropertyEditorWindowViewModel;
-
+			FixturePropertyEditorWindowViewModel vm = (FixturePropertyEditorWindowViewModel)ViewModel;
+			
 			// Give the view model the fixture being edited
 			(ViewModel as FixturePropertyEditorWindowViewModel).FixtureSpecification =
 				new Tuple<FixtureSpecification, Action>(_fixtureSpecification,

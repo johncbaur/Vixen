@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>net47</TargetFrameworks>
+    <TargetFrameworks>net48</TargetFrameworks>
     <AssemblyName>Orc.Wizard.Example</AssemblyName>
     <RootNamespace>Orc.Wizard.Example</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
@@ -47,7 +47,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Orc.Wizard\Orc.Wizard.csproj" />
+    <ProjectReference Include="..\..\..\Common\Orc.Wizard\Orc.Wizard.csproj">
+      <CopyLocal>False</CopyLocal>
+      <CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\App\FixtureSpecificationManager\FixtureSpecificationManager.csproj">
+      <CopyLocal>False</CopyLocal>
+      <CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\..\App\Fixture\Fixture.csproj">
+      <CopyLocal>False</CopyLocal>
+      <CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <ProjectReference Include="..\FixturePropertyEditor\FixturePropertyEditor.csproj">
+      <CopyLocal>False</CopyLocal>
+      <CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
   </ItemGroup>
 
   <ItemGroup>
