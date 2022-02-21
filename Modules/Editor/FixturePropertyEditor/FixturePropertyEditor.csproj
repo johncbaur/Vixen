@@ -44,14 +44,20 @@
 	  <PackageReference Include="Catel.MVVM" Version="5.12.10">
 	    <ExcludeAssets>runtime</ExcludeAssets>
 	  </PackageReference>
-	  <PackageReference Include="DataGridThemes" Version="1.0.0" />
+	  <PackageReference Include="DataGridThemes" Version="1.0.0">
+	    <ExcludeAssets>runtime</ExcludeAssets>
+	  </PackageReference>
 	</ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Controls\Controls.csproj">
-      <Private>false</Private>
+	    <IncludeAssets>None</IncludeAssets>
+	    <Private>false</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Common\Resources\Resources.csproj" />
+    <ProjectReference Include="..\..\..\Common\Resources\Resources.csproj">
+	    <IncludeAssets>None</IncludeAssets>
+	    <Private>false</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Common\WPFCommon\WPFCommon.csproj">
       <Private>false</Private>
       <IncludeAssets>None</IncludeAssets>
@@ -62,13 +68,11 @@
     </ProjectReference>
     <ProjectReference Include="..\..\App\FixtureSpecificationManager\FixtureSpecificationManager.csproj">
       <Private>false</Private>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <IncludeAssets>None</IncludeAssets>
+	    <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
     <ProjectReference Include="..\..\App\Fixture\Fixture.csproj">
       <Private>false</Private>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <IncludeAssets>None</IncludeAssets>
+	    <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
   </ItemGroup>
   
