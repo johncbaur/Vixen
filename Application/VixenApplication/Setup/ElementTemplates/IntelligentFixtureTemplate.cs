@@ -31,6 +31,7 @@ using VixenModules.Property.Color;
 using VixenModules.Property.IntelligentFixture;
 
 
+
 namespace VixenApplication.Setup.ElementTemplates
 {
 	public class IntelligentFixtureTemplate : IElementTemplate
@@ -328,38 +329,28 @@ namespace VixenApplication.Setup.ElementTemplates
 
 		public IEnumerable<ElementNode> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
 		{
-			// Stuff I tried that did not work
+			// WORKS BUT THREAD CONTINUES AND DISPLAYS FIXTURE PROPERTY EDITOR			
+			{
+				Orc.Theming.ThemeManager.Current.SynchronizeTheme();
+
+				IDependencyResolver dependencyResolver = this.GetDependencyResolver();
+				IBaseColorSchemeService baseColorService = (IBaseColorSchemeService)dependencyResolver.Resolve(typeof(IBaseColorSchemeService));
+
+				baseColorService.SetBaseColorScheme("Dark");
+
+				IAccentColorService accentColorServer = (IAccentColorService)dependencyResolver.Resolve(typeof(IAccentColorService));
+				accentColorServer.SetAccentColor((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("DodgerBlue"));
+
+				ShowWizard = new TaskCommand<Type>(OnShowWizardxEecuteAsync);
+				ShowWizard.Execute(typeof(ExampleSideNavigationWizard));
+			}
+			// END WORKS BUT THREAD CONTINUES AND DISPLAYS FIXTURE PROPERTY EDITOR
+
 			
-			//await _wizardService.ShowWizardAsync<ExampleWizard>();
-			//IDependencyResolver dependencyResolver = this.GetDependencyResolver();
-			//Task task = OnShowWizardxEecuteAsync(typeof(ExampleSideNavigationWizard));
-			//task.Wait();
-
-			//IWizardService wizardService = (IWizardService)dependencyResolver.Resolve(typeof(IWizardService));
-			//await wizardService.ShowWizardAsync<ExampleSideNavigationWizard>();
-			//Task task = wizardService.ShowWizardAsync<ExampleSideNavigationWizard>();
-			//task.Start();
-			//task.Wait();
-
-
-
-
-			// DOES NOT WORK!	
-			/*		
-			StyleHelper.CreateStyleForwardersForDefaultStyles();
-
-			Application curApp = Application.Current;
-			curApp.ApplyTheme();
-
-			ShowWizard = new TaskCommand<Type>(OnShowWizardxEecuteAsync);
-
-			ShowWizard.Execute(typeof(ExampleSideNavigationWizard));			
-			*/
-
-			// WORKS!
-			Orc.Wizard.Example.Views.MainView mainView = new Orc.Wizard.Example.Views.MainView();
-			mainView.ShowDialog();
-			// END WORKS!
+			// WORKS WITH DEVELOPER DIALOG
+			//Orc.Wizard.Example.Views.MainView mainView = new Orc.Wizard.Example.Views.MainView();
+			//mainView.ShowDialog();
+			// END WORKS WITH DEVELOPER DIALOG
 
 			bool isLampFixture = true;
 			
