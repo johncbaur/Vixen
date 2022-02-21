@@ -1,28 +1,39 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFrameworks>net46;net47</TargetFrameworks>
-    <AssemblyName>Orc.Wizard</AssemblyName>
-    <RootNamespace>Orc.Wizard</RootNamespace>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <PackageId>Orc.Wizard</PackageId>
-    <PackageVersion>1.0.0-alpha0001</PackageVersion>
-    <Description>Wizard library.</Description>
-    <PackageTags>orc;wizard</PackageTags>
+	  <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+	  <TargetFramework>net48</TargetFramework>
+	  <AssemblyName>Orc.Wizard</AssemblyName>
+	  <RootNamespace>Orc.Wizard</RootNamespace>
+	  <DefaultLanguage>en-US</DefaultLanguage>
+	  <PackageId>Orc.Wizard</PackageId>
+	  <PackageVersion>1.0.0-alpha0001</PackageVersion>
+	  <Description>Wizard library.</Description>
+	  <PackageTags>orc;wizard</PackageTags>
+	  <UseWPF>true</UseWPF>
+	  <UseWindowsForms>true</UseWindowsForms>
+	  <Platforms>x64;x86</Platforms>
+	  <ExtrasEnableImplicitWpfReferences>true</ExtrasEnableImplicitWpfReferences>
+	  <ExtrasEnableImplicitWinFormsReferences>true</ExtrasEnableImplicitWinFormsReferences>
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
-
-	<PropertyGroup>
-		<LangVersion>8.0</LangVersion>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+		<OutputPath>..\..\..\Release64\Modules\Editor\</OutputPath>
+		<UseVSHostingProcess>true</UseVSHostingProcess>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+		<OutputPath>..\..\..\$(Configuration)\Modules\Editor\</OutputPath>
+		<UseVSHostingProcess>true</UseVSHostingProcess>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+		<OutputPath>..\..\..\Debug64\Modules\Editor\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+		<OutputPath>..\..\..\$(Configuration)\Modules\Editor\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
 	</PropertyGroup>
 
-
 	<PropertyGroup>
-    <UseWpf>true</UseWpf>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ExtrasEnableImplicitWpfReferences>true</ExtrasEnableImplicitWpfReferences>
-    <ExtrasEnableImplicitWinFormsReferences>true</ExtrasEnableImplicitWinFormsReferences>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <!-- SonarQube requires a project guid -->
     <ProjectGuid>{D2C063FF-10CA-4CEE-A750-0E59A65D406B}</ProjectGuid>
   </PropertyGroup>

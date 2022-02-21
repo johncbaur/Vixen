@@ -1,38 +1,32 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFrameworks>net47</TargetFrameworks>
-    <AssemblyName>Orc.Wizard.Example</AssemblyName>
-    <RootNamespace>Orc.Wizard.Example</RootNamespace>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <SonarQubeExclude>true</SonarQubeExclude>
+	  <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+	  <RootNamespace>VixenModules.Editor.FixtureWizard</RootNamespace>
+	  <TargetFramework>net48</TargetFramework>
+	  <Product>Fixture Wizard</Product>
+	  <NeutralLanguage>en-US</NeutralLanguage>
+	  <Description>Fixture Wizard Setup</Description>
+	  <UseWPF>true</UseWPF>
+	  <Platforms>x64;x86</Platforms>
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <UseWpf>true</UseWpf>        
-    <NoWarn>$(NoWarn);SA1652</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Properties\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Properties\**" />
-    <Page Remove="Properties\**" />
-    <_SettingsFiles Remove="Properties\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="App.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="app.config" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Remove="App.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+		<OutputPath>..\..\..\Release64\Modules\Editor\</OutputPath>
+		<UseVSHostingProcess>true</UseVSHostingProcess>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+		<OutputPath>..\..\..\$(Configuration)\Modules\Editor\</OutputPath>
+		<UseVSHostingProcess>true</UseVSHostingProcess>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+		<OutputPath>..\..\..\Debug64\Modules\Editor\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+		<OutputPath>..\..\..\$(Configuration)\Modules\Editor\</OutputPath>
+		<DefineConstants>TRACE</DefineConstants>
+	</PropertyGroup>
+	<ItemGroup>
     <PackageReference Include="Catel.Fody" Version="4.5.0" PrivateAssets="all" />
     <PackageReference Include="Catel.MVVM" Version="5.12.10" />
     <PackageReference Include="Fody" Version="6.3.0" PrivateAssets="all">
