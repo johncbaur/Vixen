@@ -51,26 +51,30 @@
       <Private>false</Private>
       <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\Orc.Wizard\Orc.Wizard.csproj" />
+    <ProjectReference Include="..\..\Common\Orc.Wizard\Orc.Wizard.csproj">
+	    <Private>false</Private>
+	    <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Resources\Resources.csproj">
       <Private>false</Private>
       <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\App\FixtureSpecificationManager\FixtureSpecificationManager.csproj">
-      <Private>false</Private>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <IncludeAssets>None</IncludeAssets>
+	    <Private>false</Private>
+	    <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\App\Fixture\Fixture.csproj">
-      <Private>false</Private>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <IncludeAssets>None</IncludeAssets>
+	    <Private>false</Private>
+	    <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
     <ProjectReference Include="..\..\Modules\App\Modeling\Modeling.csproj">
       <Private>false</Private>
       <IncludeAssets>None</IncludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\..\Modules\Editor\FixtureWizard\FixtureWizard.csproj" />
+    <ProjectReference Include="..\..\Modules\Editor\FixtureWizard\FixtureWizard.csproj">
+	    <Private>false</Private>
+	    <IncludeAssets>None</IncludeAssets>
+    </ProjectReference>
     <ProjectReference Include="..\..\Modules\PostFilter\ColorBreakdown\ColorBreakdown.csproj">
       <Private>false</Private>
       <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
@@ -477,12 +481,18 @@
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="DataGridThemes" Version="1.0.0" />
+    <PackageReference Include="DataGridThemes" Version="1.0.0">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1">
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NLog.Config" Version="4.7.11">
+      <ExcludeAssets>runtime</ExcludeAssets>
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Orchestra.Core" Version="6.1.1">
       <ExcludeAssets>runtime</ExcludeAssets>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
