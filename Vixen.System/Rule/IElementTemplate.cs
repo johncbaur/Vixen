@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Vixen.Sys;
 
 namespace Vixen.Rule
@@ -26,7 +27,7 @@ namespace Vixen.Rule
 		/// <param name="selectedNodes">The node(s) that have been selected by the user (if any) when called.
 		/// These may be used as the 'parent' for ths generated items, for example.</param>
 		/// <returns>The element nodes that were generated and added to the system elements during the prcess.</returns>
-		IEnumerable<ElementNode> GenerateElements(IEnumerable<ElementNode> selectedNodes = null);
+		Task<IEnumerable<ElementNode>> GenerateElements(IEnumerable<ElementNode> selectedNodes = null);
 
 		bool ConfigureColor { get; }
 

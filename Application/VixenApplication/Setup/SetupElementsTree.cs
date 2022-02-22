@@ -236,7 +236,7 @@ namespace VixenApplication.Setup
 		}
 
 
-		private void buttonAddTemplate_Click(object sender, EventArgs e)
+		private async void buttonAddTemplate_Click(object sender, EventArgs e)
 		{
 			ComboBoxItem item = (comboBoxNewItemType.SelectedItem as ComboBoxItem);
 
@@ -244,7 +244,7 @@ namespace VixenApplication.Setup
 				IElementTemplate template = item.Value as IElementTemplate;
 				bool act = template.SetupTemplate(elementTree.SelectedElementNodes);
 				if (act) {
-					IEnumerable<ElementNode> createdElements = template.GenerateElements(elementTree.SelectedElementNodes);
+					IEnumerable<ElementNode> createdElements = await template.GenerateElements(elementTree.SelectedElementNodes);
 					if (createdElements == null || !createdElements.Any()) {
 						//messageBox Arguments are (Text, Title, No Button Visible, Cancel Button Visible)
 						MessageBoxForm.msgIcon = SystemIcons.Error; //this is used if you want to add a system icon to the message form.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common.Controls;
 using Vixen.Rule;
@@ -39,10 +40,10 @@ namespace VixenApplication.Setup.ElementTemplates
 			return false;
 		}
 
-		public IEnumerable<ElementNode> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
+		public async Task<IEnumerable<ElementNode>> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
 		{
 			ElementNode newNode = ElementNodeService.Instance.CreateSingle(null, itemName);
-			return new[] {newNode};
+			return await Task.FromResult(new[] {newNode});
 		}
 
 		public bool ConfigureColor => true;

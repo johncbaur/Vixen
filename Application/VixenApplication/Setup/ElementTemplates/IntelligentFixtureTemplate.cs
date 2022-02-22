@@ -284,7 +284,7 @@ namespace VixenApplication.Setup.ElementTemplates
 			VixenSystem.Filters.AddFilter(courseFineBreakdown);
 		}
 		
-		private Task OnShowWizardxEecuteAsync(Type wizardType)
+		private async Task<bool?> ShowWizardAsync(Type wizardType)
 		{
 			//this.ApplyTheme();
 
@@ -321,13 +321,13 @@ namespace VixenApplication.Setup.ElementTemplates
 			IDependencyResolver dependencyResolver = this.GetDependencyResolver();
 			IWizardService wizardService = (IWizardService)dependencyResolver.Resolve(typeof(IWizardService));
 
-			return wizardService.ShowWizardAsync(wizard);			
+			return await wizardService.ShowWizardAsync(wizard);			
 		}
 
 		public TaskCommand<Type> ShowWizard { get; set; }
 
 
-		public IEnumerable<ElementNode> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
+		public async Task<IEnumerable<ElementNode>> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
 		{
 			// WORKS BUT THREAD CONTINUES AND DISPLAYS FIXTURE PROPERTY EDITOR			
 			{
@@ -341,8 +341,11 @@ namespace VixenApplication.Setup.ElementTemplates
 				IAccentColorService accentColorServer = (IAccentColorService)dependencyResolver.Resolve(typeof(IAccentColorService));
 				accentColorServer.SetAccentColor((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("DodgerBlue"));
 
-				ShowWizard = new TaskCommand<Type>(OnShowWizardxEecuteAsync);
-				ShowWizard.Execute(typeof(ExampleSideNavigationWizard));
+				//ShowWizard = new TaskCommand<Type>(OnShowWizardEecuteAsync);
+				//ShowWizard.Execute(typeof(ExampleSideNavigationWizard));
+				await ShowWizardAsync(typeof(ExampleSideNavigationWizard));
+				
+
 			}
 			// END WORKS BUT THREAD CONTINUES AND DISPLAYS FIXTURE PROPERTY EDITOR
 

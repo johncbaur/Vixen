@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Common.Controls;
 using Common.Controls.Theme;
@@ -50,14 +51,14 @@ namespace VixenApplication.Setup.ElementTemplates
             return false;
         }
 
-        public IEnumerable<ElementNode> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
+        public async Task<IEnumerable<ElementNode>> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
         {
             List<ElementNode> result = new List<ElementNode>();
 
             if (treename.Length == 0)
             {
                 Logging.Error("LipSync name is null");
-                return result;
+                return await Task.FromResult(result); ;
             }
 
             ElementNode head = ElementNodeService.Instance.CreateSingle(null, treename);
@@ -72,7 +73,7 @@ namespace VixenApplication.Setup.ElementTemplates
                 stringNames.Add(stringName);
             }
 
-            return result;
+            return await Task.FromResult(result); ;
         }
 
         private void LipSync_Load(object sender, EventArgs e)
