@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +15,6 @@ using Vixen.Rule;
 using Vixen.Services;
 using Vixen.Sys;
 using Vixen.Utility;
-using VixenModules.Property.Order;
 
 namespace VixenApplication.Setup.ElementTemplates
 {
@@ -28,9 +26,6 @@ namespace VixenApplication.Setup.ElementTemplates
 		private int stringcount;
 		private bool pixeltree;
 		private int pixelsperstring;
-		private StartLocation startLocation;
-		private bool zigZag;
-		private int zigZagEvery;
 
 		public Megatree()
 		{
@@ -101,41 +96,6 @@ namespace VixenApplication.Setup.ElementTemplates
 				}
 			}
 
-			IEnumerable<ElementNode> leafNodes = Enumerable.Empty<ElementNode>();
-
-			if (startLocation == StartLocation.BottomLeft)
-			{
-				if (zigZag)
-				{
-					leafNodes = result.First().GetLeafEnumerator();
-					OrderModule.AddPatchingOrder(leafNodes, zigZagEvery);
-				}
-
-				return result;
-			}
-
-			if (startLocation == StartLocation.BottomRight)
-			{
-				leafNodes = result.First().Children.SelectMany(x => x.GetLeafEnumerator().Reverse());
-			}
-			else if (startLocation == StartLocation.TopLeft)
-			{
-				leafNodes = result.First().Children.Reverse().SelectMany(x => x.GetLeafEnumerator());
-			}
-			else if (startLocation == StartLocation.TopRight)
-			{
-				leafNodes = result.First().GetLeafEnumerator().Reverse();
-			}
-
-			if (zigZag)
-			{
-				OrderModule.AddPatchingOrder(leafNodes, zigZagEvery);
-			}
-			else
-			{
-				OrderModule.AddPatchingOrder(leafNodes);
-			}
-
 			return await Task.FromResult(result);
 		}
 
@@ -143,10 +103,6 @@ namespace VixenApplication.Setup.ElementTemplates
 		{
 			numericUpDownPixelsPerString.Enabled = checkBoxPixelTree.Checked;
 			textBoxPixelPrefix.Enabled = checkBoxPixelTree.Checked;
-			grpPatching.Enabled = checkBoxPixelTree.Checked;
-			grpWireStart.Enabled = checkBoxPixelTree.Checked;
-			lblEveryValue.Enabled = checkBoxPixelTree.Checked;
-			chkZigZag.Enabled = checkBoxPixelTree.Checked;
 		}
 
 		private void Megatree_Load(object sender, EventArgs e)
@@ -155,17 +111,6 @@ namespace VixenApplication.Setup.ElementTemplates
 			numericUpDownStrings.Value = stringcount;
 			checkBoxPixelTree.Checked = pixeltree;
 			numericUpDownPixelsPerString.Value = pixelsperstring;
-			lblEveryValue.Text = zigZagEvery.ToString();
-			chkZigZag.Checked = zigZag;
-			switch (startLocation)
-			{
-				case StartLocation.BottomLeft:
-					radioBottomLeft.Checked = true;
-					break;
-				case StartLocation.BottomRight:
-					radioBottomRight.Checked = true;
-					break;
-			}
 		}
 
 		private void Megatree_FormClosed(object sender, FormClosedEventArgs e)
@@ -174,40 +119,6 @@ namespace VixenApplication.Setup.ElementTemplates
 			stringcount = Decimal.ToInt32(numericUpDownStrings.Value);
 			pixeltree = checkBoxPixelTree.Checked ;
 			pixelsperstring = Decimal.ToInt32(numericUpDownPixelsPerString.Value);
-			zigZag = chkZigZag.Checked;
-			zigZagEvery = Convert.ToInt32(lblEveryValue.Text);
-			if (radioBottomRight.Checked)
-			{
-				startLocation = StartLocation.BottomRight;
-			}
-			else
-			{
-				startLocation = StartLocation.BottomLeft;
-			}
-		}
-
-		private void chkZigZag_CheckedChanged(object sender, EventArgs e)
-		{
-			UpdateZigZag();
-		}
-
-		private void UpdateZigZag()
-		{
-			if (chkZigZag.Checked)
-			{
-
-				lblEveryValue.Text = numericUpDownPixelsPerString.Value.ToString(CultureInfo.InvariantCulture);
-
-			}
-			else
-			{
-				lblEveryValue.Text = "0";
-			}
-		}
-
-		private void numericUpDownPixelsPerString_ValueChanged(object sender, EventArgs e)
-		{
-			UpdateZigZag();
 		}
 
 		private void buttonBackground_MouseHover(object sender, EventArgs e)
@@ -221,12 +132,5 @@ namespace VixenApplication.Setup.ElementTemplates
 			var btn = (Button)sender;
 			btn.BackgroundImage = Resources.ButtonBackgroundImage;
 		}
-
-		private void groupBoxes_Paint(object sender, PaintEventArgs e)
-		{
-			ThemeGroupBoxRenderer.GroupBoxesDrawBorder(sender, e, Font);
-		}
-
-		
 	}
 }
