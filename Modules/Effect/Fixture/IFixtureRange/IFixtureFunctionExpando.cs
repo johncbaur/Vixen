@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Vixen.Data.Value;
 using VixenModules.App.ColorGradients;
 using VixenModules.App.Curves;
@@ -57,5 +58,10 @@ namespace VixenModules.Effect.Fixture
 		/// This property is applicable to RGB and RGBW functions.
 		/// </summary>
 		ColorGradient Color { get; set; }		
+
+		/// <summary>
+		/// Color to represent the function on the timeline for certain effects.
+		/// </summary>
+		Color TimelineColor { get; set; }
 	}
 }

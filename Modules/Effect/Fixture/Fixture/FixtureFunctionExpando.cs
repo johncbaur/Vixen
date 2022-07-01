@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using Vixen.Attributes;
 using Vixen.Data.Value;
@@ -65,6 +66,9 @@ namespace VixenModules.Effect.Fixture
 
 				// Initialize the color to white
 				Color = new ColorGradient(System.Drawing.Color.White);
+
+				// Initialize the timeline color
+				TimelineColor = FixtureModule.ActiveFunction.TimelineColor;
 			}
 			// Otherwise just default the properties
 			else
@@ -74,6 +78,7 @@ namespace VixenModules.Effect.Fixture
 				IndexData = new List<FixtureIndex>();
 				ColorWheelIndexData = new List<FixtureColorWheel>();
 				Color = new ColorGradient(System.Drawing.Color.White);
+				TimelineColor = System.Drawing.Color.White;
 			}
 
 			InitAllAttributes();
@@ -192,7 +197,15 @@ namespace VixenModules.Effect.Fixture
 				if (!string.IsNullOrEmpty(_indexValue))
 				{
 					// Find the fixture index object
-					FixtureIndex fixtureIndex = IndexData.Single(item => item.Name == _indexValue);
+					FixtureIndex fixtureIndex = IndexData.SingleOrDefault(item => item.Name == _indexValue);
+
+					// If the index entry was not found then...
+					if (fixtureIndex == null)
+					{
+						// Default to the first entry
+						fixtureIndex = IndexData.First();
+						_indexValue = fixtureIndex.Name;
+					}
 
 					// If the fixture index has a range (curve) then...
 					if (fixtureIndex.UseCurve)
@@ -232,7 +245,15 @@ namespace VixenModules.Effect.Fixture
 				if (!string.IsNullOrEmpty(_colorIndexValue))
 				{
 					// Find the color wheel index object
-					FixtureColorWheel fixtureColorWheel = ColorWheelIndexData.Single(item => item.Name == _colorIndexValue);
+					FixtureColorWheel fixtureColorWheel = ColorWheelIndexData.SingleOrDefault(item => item.Name == _colorIndexValue);
+
+					// If the color wheel entry is NOT found then...
+					if (fixtureColorWheel == null)
+					{
+						// Default the color to the first entry
+						fixtureColorWheel = ColorWheelIndexData.First();
+						_colorIndexValue = fixtureColorWheel.Name;
+					}
 
 					// If the fixture index has a range (curve) then...
 					if (fixtureColorWheel.UseCurve)
@@ -263,6 +284,12 @@ namespace VixenModules.Effect.Fixture
 		[PropertyOrder(15)]
 		public ColorGradient Color { get; set; }
 
+		/// <summary>
+		/// Refer to interface documentation.
+		/// </summary>
+		[Browsable(false)]
+		public Color TimelineColor { get; set; }
+
 		#endregion
 
 		#region Public Properties
@@ -283,13 +310,17 @@ namespace VixenModules.Effect.Fixture
 								
 		#region Public Methods
 
+		/// <summary>
+		/// Returns the function name.
+		/// </summary>
+		/// <returns>Function name</returns>
 		public override string ToString()
 		{
 			return FunctionName;
 		}
 		
 		/// <summary>
-		/// Returns a clone of the fixture range.
+		/// Returns a clone of the fixture function.
 		/// </summary>		
 		public IFixtureFunctionExpando CreateInstanceForClone()
 		{
@@ -297,14 +328,14 @@ namespace VixenModules.Effect.Fixture
 			{
 				IndexData = IndexData,
 				ColorWheelIndexData = ColorWheelIndexData,
-
 				FunctionIdentity = FunctionIdentity,
 				Range = new Curve(Range),
 				FunctionName = FunctionName,
 				FunctionType = FunctionType,
 				IndexValue = IndexValue,
 				ColorIndexValue  = ColorIndexValue,				
-				Color = new ColorGradient(Color),				
+				Color = new ColorGradient(Color),		
+				TimelineColor = TimelineColor,	
 			};
 
 			return result;

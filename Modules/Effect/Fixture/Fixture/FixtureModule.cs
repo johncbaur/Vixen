@@ -180,8 +180,26 @@ namespace VixenModules.Effect.Fixture
 			// Create a slightly smaller clipping rectangle
 			Rectangle clippingRect = new Rectangle(clipRectangle.X, clipRectangle.Y, clipRectangle.Width, clipRectangle.Height - 4);
 
-			// Draw the effect name on the timeline
-			DrawText(graphics, clippingRect, Color.Purple, "Fixture", 0, 0, clippingRect.Height);
+			// Retrieve the timeline colors from the function view models
+			List<Color> timelineColors = Functions.Select(function => function.TimelineColor).ToList();
+
+			// Draw horizontal bars of color to represent the fixture functions
+			Bitmap bars = DrawHorizontalBars(new Size(clipRectangle.Width, clipRectangle.Height), timelineColors);
+
+			// Draw the bars bitmap on the graphics context (timeline)
+			graphics.DrawImage(bars, 0, 0);
+
+			// If there is at least one fixture function then...
+			if (timelineColors.Count != 0)
+			{
+				// Draw the effect name in a black font
+				DrawText(graphics, clippingRect, Color.Black, "Fixture", 0, 0, clippingRect.Height);
+			}
+			else
+			{
+				// Otherwise draw the effect ame in a white font
+				DrawText(graphics, clippingRect, Color.White, "Fixture", 0, 0, clippingRect.Height);
+			}
 		}
 
 		#endregion
@@ -468,6 +486,65 @@ namespace VixenModules.Effect.Fixture
 		{
 			// Delegate to the pulse effect helper class
 			return PulseRenderer.RenderNode(node, intensity, colorGradient, TimeSpan, false);
+		}
+
+		/// <summary>
+		/// Draws horizontal bars of color on a bitmap for the effect's graphical representation on the timeline.
+		/// </summary>
+		/// <param name="size">Size of the drawing area on the timeline</param>
+		/// <param name="colors">Colors of the bars</param>
+		/// <returns>Bitmap filled with horizontal bars of the specified colors</returns>
+		public Bitmap DrawHorizontalBars(
+			Size size,												
+			List<Color> colors)
+		{			
+			// Create the bitmap to draw into
+			Bitmap barBitmap = new Bitmap(size.Width, size.Height);
+
+			// Make a copy of the colors
+			List<Color> barColors = new List<Color>(colors);
+
+			// If there are no colors then...
+			if (barColors.Count == 0)
+			{
+				// Default bitmap to one bar of black
+				barColors.Add(Color.Black);
+			}
+
+			// Create a graphics context using the bitmap
+			using (Graphics g = Graphics.FromImage(barBitmap))
+			{										
+				// Determine the height of each bar
+				int heightOfBar = size.Height / barColors.Count;
+				
+				// Start drawing at the bottom
+				int y = 0;
+
+				// Loop over the colors
+				for(int colorIndex = 0; colorIndex < barColors.Count; colorIndex++)
+				{
+					// Create a solid brush using the bar color
+					using (Brush barBrush = new SolidBrush(barColors[colorIndex]))
+					{
+						// If this is the last bar then...
+						if (colorIndex == barColors.Count - 1)
+						{
+							// Extend the bar to fill the area
+							g.FillRectangle(barBrush, new Rectangle(0, y, size.Width, size.Height - y));							
+						}
+						else
+						{
+							// Draw the color bar
+							g.FillRectangle(barBrush, new Rectangle(0, y, size.Width, heightOfBar));
+						}
+
+						// Increment the Y coordinate of the bar
+						y += heightOfBar;
+					}
+				}								
+			}
+
+			return barBitmap;
 		}
 
 		#endregion
