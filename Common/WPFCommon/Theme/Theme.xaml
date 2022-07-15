@@ -5,14 +5,16 @@
     xmlns:utils="clr-namespace:Common.WPFCommon.Utils"
 	xmlns:sys="clr-namespace:System;assembly=mscorlib"
 	xmlns:controls="clr-namespace:Common.WPFCommon.Controls"
-	xmlns:catel="http://schemas.catelproject.com">
+	xmlns:catel="http://schemas.catelproject.com"
+    xmlns:localconverters="using:Catel.MVVM.Converters">
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="Menu.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
-
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    
+    <catel:CollectionToCollapsingVisibilityConverter x:Key="CollectionToCollapsingVisibilityConverter"/>
+     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <Style TargetType="{x:Type catel:Window}">
 	    <Setter Property="Background" Value="{StaticResource BackColorBrush}"/>
@@ -65,7 +67,49 @@
         </Style.Triggers>
     </Style>
 
-   <!-- TreeView -->
+   
+    <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+
+    <Style TargetType="{x:Type GroupBox}">
+        <Setter Property="BorderBrush" Value="#D5DFE5" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupBox}">
+                    <Grid SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="6" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="6" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="6" />
+                        </Grid.RowDefinitions>
+                        <Border CornerRadius="4" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="4" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="Transparent" Background="{TemplateBinding Background}" />
+                        <Border Name="Header" Padding="3,1,3,0" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
+                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="true" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <ContentPresenter Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4"  BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3">
+                            <Border.OpacityMask>
+                                <MultiBinding Converter="{StaticResource BorderGapMaskConverter}" ConverterParameter="7">
+                                    <Binding ElementName="Header" Path="ActualWidth" />
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                </MultiBinding>
+                            </Border.OpacityMask>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- TreeView -->
     <Style TargetType="{x:Type TreeView}">
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Background" Value="{StaticResource BackColorBrush}"/>
@@ -1994,6 +2038,124 @@
 		    </Trigger>
 	    </Style.Triggers>
 	    <Setter Property="TextDecorations" Value="Underline" />
+    </Style>
+
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="InfoBarMessageBackgroundBrush" Color="Yellow" />
+    <SolidColorBrush x:Key="InfoBarMessageSeparatorBrush" Color="Black" />
+    <SolidColorBrush x:Key="InfoBarMessageErrorTextBackgroundBrush" Color="Yellow" />
+    <SolidColorBrush x:Key="InfoBarMessageErrorTextColorBrush" Color="Red" />
+    <SolidColorBrush x:Key="InfoBarMessageWarningTextColorBrush" Color="Orange" />
+
+    <Style x:Key="yourCustomStyleKey" TargetType="catel:InfoBarMessageControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type catel:InfoBarMessageControl}">
+                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Actual content -->
+                            <ContentPresenter Grid.Row="1" x:Name="actualContent" />
+
+                            <!-- Message bar, by default in-line (Grid.Row = 0) -->
+                            <StackPanel Grid.Row="0" x:Name="PART_MessageBar"
+                                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type catel:InfoBarMessageControl}}, Path=MessageCount, Converter={StaticResource CollectionToCollapsingVisibilityConverter}}"
+                                            Width="{Binding ElementName=actualContent, Path=ActualWidth}">
+
+                                <!-- Internal StackPanel, otherwise the whole control will have the background brush -->
+                                <StackPanel Background="{StaticResource InfoBarMessageBackgroundBrush}">
+                                    <!-- Actual text -->
+                                    <TextBlock Padding="4,2,4,2" Foreground="Black" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type catel:InfoBarMessageControl}}, Path=InfoMessage}" />
+
+                                    <!-- Line -->
+                                    <Line Name="infoBarSeparator" Margin="0" Stroke="{StaticResource InfoBarMessageSeparatorBrush}" 
+                                              X1="0" X2="1" Stretch="UniformToFill" />
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Popup -->
+                        <Popup IsOpen="{Binding ElementName=PART_MessageBar, Path=IsMouseOver, Mode=OneWay}" 
+                               PlacementTarget="{Binding ElementName=infoBarSeparator}"
+                               Placement="Bottom" 
+							   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}"
+                               AllowsTransparency="True" PopupAnimation="Fade">
+                            <Grid Background="{StaticResource InfoBarMessageErrorTextBackgroundBrush}"
+								  DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type catel:InfoBarMessageControl}}}">
+
+                                <!-- Column definitions -->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Row definitions -->
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!-- List of errors -->
+                                <ItemsControl Grid.Row="0" ItemsSource="{Binding ErrorMessageCollection}" Height="Auto" VerticalAlignment="Top"
+											  Visibility="{Binding ErrorMessageCollection.Count, Converter={StaticResource CollectionToCollapsingVisibilityConverter}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <!-- Column definitions -->
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Content -->
+                                                <Image Grid.Column="0" Source="/Catel.MVVM;component/Resources/Images/Error.png" Margin="2,2,4,2" Width="16" Height="16"/>
+                                                <TextBlock Grid.Column="1" Foreground="{StaticResource InfoBarMessageErrorTextColorBrush}" Text="{Binding}" TextWrapping="Wrap" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <!-- List of warnings -->
+                                <ItemsControl Grid.Row="1" ItemsSource="{Binding WarningMessageCollection}" Height="Auto" VerticalAlignment="Top" 
+											  Visibility="{Binding WarningMessageCollection.Count, Converter={StaticResource CollectionToCollapsingVisibilityConverter}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <!-- Column definitions -->
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Content -->
+                                                <Image Grid.Column="0" Source="/Catel.MVVM;component/Resources/Images/Warning.png" Margin="2,2,4,2" Width="16" Height="16"/>
+                                                <TextBlock Grid.Column="1" Foreground="{StaticResource InfoBarMessageWarningTextColorBrush}" Text="{Binding}" TextWrapping="Wrap" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <!-- Line -->
+                                <Line Grid.Row="2" Margin="0" Stroke="{StaticResource InfoBarMessageSeparatorBrush}" X1="0" X2="1" 
+                                      Stretch="UniformToFill" />
+
+                            </Grid>
+                        </Popup>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 	<Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">

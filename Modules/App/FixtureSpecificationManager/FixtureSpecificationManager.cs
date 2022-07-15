@@ -83,7 +83,7 @@ namespace VixenModules.App.FixtureSpecificationManager
 
 			// Get all the XML files in the fixture directory
 			FileInfo[] specificationFiles = directoryInfo.GetFiles("*.xml");
-
+						
 			// Loop over all the fixture specification in the folder
 			foreach (FileInfo fileInfo in specificationFiles)
 			{								
@@ -102,22 +102,17 @@ namespace VixenModules.App.FixtureSpecificationManager
 					logging.Error(e, fileInfo.FullName + "is malformed!");						
 				}							
 			}
-		
+			
+			// TODO: Remove development code!			
+			if (!FixtureSpecifications.Any(fixture => fixture.Name == ADJHydroBeamX1Data.GetFixture().Name))
+			{
+				FixtureSpecifications.Add(ADJHydroBeamX1Data.GetFixture());
+			}
 
-			//
-			// This commented out code is used to support development and testing of the intelligent fixtures.
-			// The classes below create fixture specifications to avoid having to perform manual data entry
-			// or XML surgery after a schema change.
-			//
-			//if (!FixtureSpecifications.Any(fixture => fixture.Name == ADJHydroBeamX1Data.GetFixture().Name))
-			//{
-			//	FixtureSpecifications.Add(ADJHydroBeamX1Data.GetFixture());
-			//}
-			//
-			//if (!FixtureSpecifications.Any(fixture => fixture.Name == ADJHydroWashX7_17FixtureData.GetFixture().Name))
-			//{
-			//	FixtureSpecifications.Add(ADJHydroWashX7_17FixtureData.GetFixture());
-			//}			
+			if (!FixtureSpecifications.Any(fixture => fixture.Name == ADJHydroWashX7_17FixtureData.GetFixture().Name))
+			{
+				FixtureSpecifications.Add(ADJHydroWashX7_17FixtureData.GetFixture());
+			}			
 		}
 
 		#endregion

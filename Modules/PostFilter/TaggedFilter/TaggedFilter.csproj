@@ -42,11 +42,8 @@
 		<ProjectReference Include="..\..\..\Common\Controls\Controls.csproj">
 			<Private>false</Private>
 			<IncludeAssets>None</IncludeAssets>
-		</ProjectReference>				
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="NLog" Version="4.7.15">
-			<ExcludeAssets>runtime</ExcludeAssets>
-		</PackageReference>
+			<CopyLocal>False</CopyLocal>
+			<CopyLocalSatelliteAssemblies>False</CopyLocalSatelliteAssemblies>
+		</ProjectReference>
 	</ItemGroup>
 </Project>

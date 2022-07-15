@@ -35,6 +35,7 @@ using Point = System.Drawing.Point;
 using SystemFonts = System.Drawing.SystemFonts;
 using Timer = System.Windows.Forms.Timer;
 using WPFApplication = System.Windows.Application;
+using VixenModules.App.FixtureSpecificationManager;
 
 namespace VixenApplication
 {
@@ -136,7 +137,9 @@ namespace VixenApplication
 				form.Dispose(); 
 				Environment.Exit(0);
 			}
-			
+
+			FixtureSpecificationManager.Instance().InitializeProfilePath(_rootDataDirectory);
+
 			stopping = false;
 			toolStripStatusUpdates.Text = "";
 			PopulateVersionStrings();

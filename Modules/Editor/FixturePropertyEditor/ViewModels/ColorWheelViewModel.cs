@@ -67,7 +67,10 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 			
 				// Assign the color wheel item colors
 				colorSlot.Color1 = colorWheel.Color1;
-				colorSlot.Color2 = colorWheel.Color2;		
+				colorSlot.Color2 = colorWheel.Color2;
+
+				// Assign whether the color is included in the color property of the element
+				colorSlot.ExcludeColorProperty = colorWheel.ExcludeColorProperty;
 				
 				// Add the color wheel view model item to the collection
 				Items.Add(colorSlot);
@@ -116,6 +119,9 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 				// Assign the item's colors
 				colorSlot.Color1 = item.Color1;
 				colorSlot.Color2 = item.Color2;
+
+				// Assign whether the color is included in the color property of the element
+				colorSlot.ExcludeColorProperty = item.ExcludeColorProperty;
 
 				// Add the color wheel model object to the collection
 				returnCollection.Add(colorSlot);

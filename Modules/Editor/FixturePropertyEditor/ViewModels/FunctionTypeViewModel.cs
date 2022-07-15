@@ -293,6 +293,9 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 				// Set the function legend so that it can be displayed in the preview
 				functionVM.Legend = functionType.Label;
 
+				// Set the function timeline color
+				functionVM.TimelineColor = functionType.TimelineColor;	
+
 				// Add the function view model to the collection
 				Items.Add(functionVM);
 			}
@@ -343,6 +346,9 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 				// Set the function zoom type
 				function.ZoomType = item.ZoomNarrowToWide ? FixtureZoomType.NarrowToWide : FixtureZoomType.WideToNarrow;
 
+				// Set the timeline color
+				function.TimelineColor = item.TimelineColor;
+
 				// Add the model function to the return collection
 				returnCollection.Add(function);
 			}
@@ -360,6 +366,7 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 			ColorWheelVisible = false;
 			IndexedVisible = false;
 			PanTiltVisible = false;
+			PanTiltVM.Animate.Reset();
 			ZoomVisible = false;
 		}
 	
@@ -623,9 +630,11 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 
 			// Hide the pan / tilt user control
 			PanTiltVisible = false;
+			PanTiltVM.Animate.Reset();
 
 			// Hide the zoom user control
 			PanTiltVisible = false;
+			PanTiltVM.Animate.Reset();
 
 			// Hide the zoom user control
 			ZoomVisible = false;
@@ -634,11 +643,12 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 		/// <summary>
 		/// Display the pan tilt rotation limits in the details area.
 		/// </summary>
-		/// <param name="rotationLimits">Rotation limits associated with the function</param>		
-		private void DisplayTiltPan(FixtureRotationLimits rotationLimits, Action raiseCanExecuteChanged)
+		/// <param name="rotationLimits">Rotation limits associated with the function</param>
+		/// <param name="isPan">True when the active function is the Pan function</param>
+		private void DisplayTiltPan(FixtureRotationLimits rotationLimits, Action raiseCanExecuteChanged, bool isPan)
 		{
 			// Give the rotation limits model data to the pan tilt view model
-			PanTiltVM.InitializeViewModel(rotationLimits, RaiseCanExecuteChanged);
+			PanTiltVM.InitializeViewModel(rotationLimits, RaiseCanExecuteChanged, isPan);
 
 			// Make the pan tilt user control visible
 			PanTiltVisible = true;
@@ -667,6 +677,7 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 
 			// Hide the pan tilt user control visible
 			PanTiltVisible = false;
+			PanTiltVM.Animate.Reset();
 
 			// Hide the color wheel user control visible
 			ColorWheelVisible = false;
@@ -693,6 +704,7 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 
 			// Hide the pan / tilt user control
 			PanTiltVisible = false;
+			PanTiltVM.Animate.Reset();
 
 			// Hide the zoom user control
 			ZoomVisible = false;
@@ -724,7 +736,7 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 						PreviouslySelectedItem.FunctionIdentity == Vixen.Data.Value.FunctionIdentity.Tilt)
 					{
 						// Display the pan/tilt rotation limits
-						DisplayTiltPan(PreviouslySelectedItem.RotationLimits, RaiseCanExecuteChanged);
+						DisplayTiltPan(PreviouslySelectedItem.RotationLimits, RaiseCanExecuteChanged, PreviouslySelectedItem.FunctionIdentity == Vixen.Data.Value.FunctionIdentity.Pan);
 					}
 					// If the function is Zoom then...
 					else if (PreviouslySelectedItem.FunctionIdentity == Vixen.Data.Value.FunctionIdentity.Zoom)
@@ -864,7 +876,7 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 		/// <param name="validationResults">Results of the validation</param>
 		protected override void ValidateBusinessRules(List<IBusinessRuleValidationResult> validationResults)
 		{			
-			// If the function names are unique then...
+			// If the function names are NOTE unique then...
 			if (!AreFunctionNamesUnique())
 			{
 				// Add an error that there are duplicate function names

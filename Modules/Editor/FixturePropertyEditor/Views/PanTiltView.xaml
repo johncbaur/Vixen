@@ -11,8 +11,10 @@
 		xmlns:local="clr-namespace:VixenModules.Editor.FixturePropertyEditor.Views"			  
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:VixenModules.Editor.FixturePropertyEditor.ViewModels"		           
-        mc:Ignorable="d">
-    <UserControl.Resources>
+        mc:Ignorable="d"
+	    Loaded="UserControl_Loaded"
+		Unloaded="UserControl_Unloaded">
+	<UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/WPFCommon;component/Theme/Theme.xaml"/>
@@ -25,26 +27,32 @@
 
     <StackPanel>
         <WrapPanel>
-            <Label Content="Start Position (Degrees):" Margin="10, 10, 5, 0"></Label>
+            <Label Content="Start Position (Degrees):" Margin="10, 10, 5, 0"
+				   ToolTip="Defines the resting position of the fixture."></Label>
             <TextBox  
                 x:Name="txtStartPosition"
                 MinWidth="40"
                 HorizontalAlignment="Left"                   
                  VerticalAlignment = "Center" Padding="1"
                       Text="{Binding Path=StartPosition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true}"                    
-                      >
+                      ToolTip="Defines the resting position of the fixture.">
             </TextBox>
         </WrapPanel>
         <WrapPanel>
-            <Label Content="Stop Position (Degrees):" Margin="10, 10, 5, 0"></Label>
+            <Label Content="Stop Position (Degrees):" Margin="10, 10, 5, 0"
+				   ToolTip="Defines the maximum range of movement."
+				   ></Label>
             <TextBox  
                 x:Name="txtStopPosition"
                 MinWidth="40"
                 HorizontalAlignment="Left"                   
                  VerticalAlignment = "Center" Padding="1"
-                          Text="{Binding Path=StopPosition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true}">
+                          Text="{Binding Path=StopPosition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnValidationError=true}"
+				ToolTip="Defines the maximum range of movement."
+				>
             </TextBox>
         </WrapPanel>
-    </StackPanel>
+		<Viewport3D Name="MainViewport"/>
+	</StackPanel>
 
 </catel:UserControl>

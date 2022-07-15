@@ -43,7 +43,8 @@
                 <DataGridTemplateColumn Header="Name" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name, ValidatesOnDataErrors=True, NotifyOnValidationError=true}">
+                            <TextBlock Text="{Binding Name, ValidatesOnDataErrors=True, NotifyOnValidationError=true}"
+									   ToolTip="Unique name for the color entry.  This name is used to select the option in effects.">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -59,18 +60,19 @@
                 <DataGridTemplateColumn Header="Start Value" Width="63">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding StartValue,  ValidatesOnDataErrors=True, NotifyOnValidationError=true}">
+                            <TextBlock Text="{Binding StartValue,  ValidatesOnDataErrors=True, NotifyOnValidationError=true}"
+									   ToolTip="DMX start value for the color.">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox MinWidth="30">
-                                <TextBox.Text>
-                                    <Binding Path="StartValue" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="true">
-                                        <Binding.ValidationRules>
-                                        </Binding.ValidationRules>
-                                    </Binding>
+                            <TextBox MinWidth="30"
+									 ToolTip="DMX start value for the color.">
+								<TextBox.Text>
+									<Binding Path="StartValue" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="true">
+
+									</Binding>
                                 </TextBox.Text>
                             </TextBox>
                         </DataTemplate>
@@ -80,18 +82,17 @@
                <DataGridTemplateColumn Header="End Value" Width="63">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding EndValue,  ValidatesOnDataErrors=True, NotifyOnValidationError=true}">
+                            <TextBlock Text="{Binding EndValue,  ValidatesOnDataErrors=True, NotifyOnValidationError=true}"
+									   ToolTip="DMX stop value for the color.">
                             </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <TextBox MinWidth="30">
+							<TextBox MinWidth="30" ToolTip="DMX stop value for the color.">
                                 <TextBox.Text>
-                                    <Binding Path="StartValue" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="true">
-                                        <Binding.ValidationRules>
-                                        </Binding.ValidationRules>
-                                    </Binding>
+									<Binding Path="EndValue" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="true">
+									</Binding>
                                 </TextBox.Text>
                             </TextBox>
                         </DataTemplate>
@@ -101,7 +102,9 @@
 		        <DataGridTemplateColumn Header="Use Curve" Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=UseCurve, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=UseCurve, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+									  ToolTip="Use curve when your manual shows a range of DMX values that spins the color wheel."
+									  />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -109,7 +112,9 @@
                 <DataGridTemplateColumn Header="Half Stop" Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=HalfStep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=HalfStep, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+									  ToolTip="Select Half Stop option if the entry is half way between two colors on the color wheel."
+									  />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -119,7 +124,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <WrapPanel>
-                                <Button Width="25" Height="20" Content="{ Binding ButtonText }" Command="{Binding EditColor1Command}">
+                                <Button Width="25" Height="20" Content="{ Binding ButtonText }" Command="{Binding EditColor1Command}"
+										ToolTip="Select '...' button to assign the color.">
                                     <Button.Style>
                                         <Style TargetType="Button">
                                             <Setter Property="Background" Value="{Binding Color1, Converter={StaticResource ColorToSolidColorBrush_ValueConverter}}" />
@@ -135,6 +141,16 @@
                                     </Button.Style>
                                 </Button>
                             </WrapPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Exclude&#x0a;Color&#x0a;Property" Width="65">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=ExcludeColorProperty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+									  ToolTip="Excludes the color entry from the color property associated with the fixture element.  This option should be selected for colors like CTB (Color Temperature Blue) and UV (Ultraviolet)."
+									  />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
