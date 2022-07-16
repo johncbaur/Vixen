@@ -13,9 +13,7 @@
         {
             Argument.IsNotNull(() => wizardPage);
 
-            // Configure Catel to validate immediately
-            DeferValidationUntilFirstSaveCall = false; 
-            
+            DeferValidationUntilFirstSaveCall = true;
             WizardPage = wizardPage;
             QuickNavigateToPage = new TaskCommand<IWizardPage>(QuickNavigateToPageExecuteAsync, QuickNavigateToPageCanExecute);
         }

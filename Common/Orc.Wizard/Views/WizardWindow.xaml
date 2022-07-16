@@ -184,11 +184,12 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
+						<!-- Style="{Binding Style}" -->
                         <Button 
                                 Width="100"
                                 Margin="10,10,10,10"
                                 Command="{Binding Command}" 
-                                Content="{Binding Content}"                                 
+                                Content="{Binding Content}"                                                                 
                                 Visibility="{Binding IsVisible, Converter={catel:BooleanToCollapsingVisibilityConverter}}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
