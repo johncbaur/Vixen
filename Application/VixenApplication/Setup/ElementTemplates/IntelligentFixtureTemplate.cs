@@ -746,7 +746,7 @@ namespace VixenApplication.Setup.ElementTemplates
 			_wizard.CacheViewsWrapper = false;
 
 			// Configure the wizard with a navigation controller														
-			_wizard.NavigationControllerWrapper = typeFactory.CreateInstanceWithParametersAndAutoCompletion<FastForwardNavigationController>(_wizard);
+			_wizard.NavigationControllerWrapper = typeFactory.CreateInstanceWithParametersAndAutoCompletion<FixtureWizardNavigationController>(_wizard);
 					
 			// Create the wizard service
 			IDependencyResolver dependencyResolver = this.GetDependencyResolver();
@@ -1017,7 +1017,7 @@ namespace VixenApplication.Setup.ElementTemplates
 		/// Refer to interface documentation.
 		/// </summary>		
 		public async Task<IEnumerable<ElementNode>> GenerateElements(IEnumerable<ElementNode> selectedNodes = null)
-		{			
+		{
 			// Without this call the wizard will produce the following exception:
 			// 'Theming is not yet initialized, make sure to initialize a theme via ThemeManager first'
 			ThemeManager.Current.SynchronizeTheme();
