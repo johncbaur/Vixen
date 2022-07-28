@@ -31,7 +31,6 @@
 		<Setter Property="BorderThickness" Value="1"/>
 	</Style>
 
-
 	<Style x:Key="{x:Type ToolTip}" TargetType="ToolTip">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="Foreground" Value="{StaticResource ForeColorBrush}"/>
@@ -348,6 +347,209 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- This Style is used by the Intelligent Fixture Wizard Navigation Controller to inject Vixen button styles onto the Wizard -->
+	<Style x:Key="VixenButtonStyle" TargetType="{x:Type Button}">
+		<Setter Property="SnapsToDevicePixels" Value="true"/>
+		<Setter Property="OverridesDefaultStyle" Value="true"/>
+		<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+		<Setter Property="Foreground" Value="{StaticResource ForeColorBrush}"/>
+		<!--<Setter Property="FontSize" Value="7.5pt"/>-->
+		<Setter Property="MinHeight" Value="20"/>
+		<Setter Property="MinWidth" Value="100"/>
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		<Setter Property="Margin" Value="10 10 10 10"/>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Grid>
+						<Border x:Name="Background" CornerRadius="3" BorderBrush="{StaticResource BorderColorBrush}" BorderThickness="0,1,0,0">
+							<Border.Background>
+								<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+									<GradientStop Offset="0.0" Color="#585858" />
+									<GradientStop Offset="1.2" Color="#282828" />
+								</LinearGradientBrush>
+							</Border.Background>
+						</Border>
+						<Border x:Name="BackgroundHighlighted" Opacity="0" BorderThickness="0,1,0,1" CornerRadius="3" BorderBrush="#282828">
+							<Border.Background>
+								<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+									<GradientStop Offset="0.0" Color="#505050" />
+									<GradientStop Offset="1.2" Color="#383838" />
+								</LinearGradientBrush>
+							</Border.Background>
+						</Border>
+						<Border x:Name="BackgroundSunken" BorderBrush="#000000" BorderThickness="0,0,0,1" CornerRadius="3" />
+						<ContentPresenter x:Name="Content" Margin="5,2" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Trigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="{StaticResource BorderColor}" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" To="#686868" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" To="#282828" Duration="0:0:0.1" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.EnterActions>
+							<Trigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.2" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.ExitActions>
+						</Trigger>
+						<Trigger Property="IsFocused" Value="True">
+							<Trigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#989898" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" To="#787878" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" To="#383838" Duration="0:0:0.1" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.EnterActions>
+							<Trigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.2" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.ExitActions>
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="Content" Property="RenderTransform">
+								<Setter.Value>
+									<TranslateTransform Y="1" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="BackgroundSunken" Property="RenderTransform">
+								<Setter.Value>
+									<TranslateTransform Y="1" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="Background" Property="Opacity" Value="0" />
+							<Setter TargetName="BackgroundHighlighted" Property="Opacity" Value="1" />
+							<Setter TargetName="BackgroundSunken" Property="BorderBrush" Value="#555" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="#777"/>
+							<Setter Property="Opacity" Value="0.75"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="WizardNavigationButtonStyle" TargetType="{x:Type Button}">
+		<Setter Property="SnapsToDevicePixels" Value="true"/>
+		<Setter Property="OverridesDefaultStyle" Value="true"/>
+		<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+		<Setter Property="Foreground" Value="{StaticResource ForeColorBrush}"/>
+		<!--<Setter Property="FontSize" Value="7.5pt"/>-->
+		<Setter Property="MinHeight" Value="20"/>
+		<Setter Property="MinWidth" Value="100"/>
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		<Setter Property="Margin" Value="10 10 10 10"/>
+
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type Button}">
+					<Grid>
+						<Border x:Name="Background" CornerRadius="3" BorderBrush="{StaticResource BorderColorBrush}" BorderThickness="0,1,0,0">
+							<Border.Background>
+								<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+									<GradientStop Offset="0.0" Color="#585858" />
+									<GradientStop Offset="1.2" Color="#282828" />
+								</LinearGradientBrush>
+							</Border.Background>
+						</Border>
+						<Border x:Name="BackgroundHighlighted" Opacity="0" BorderThickness="0,1,0,1" CornerRadius="3" BorderBrush="#282828">
+							<Border.Background>
+								<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+									<GradientStop Offset="0.0" Color="#505050" />
+									<GradientStop Offset="1.2" Color="#383838" />
+								</LinearGradientBrush>
+							</Border.Background>
+						</Border>
+						<Border x:Name="BackgroundSunken" BorderBrush="#000000" BorderThickness="0,0,0,1" CornerRadius="3" />
+						<ContentPresenter x:Name="Content" Margin="5,2" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True"/>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsMouseOver" Value="true">
+							<Trigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="{StaticResource BorderColor}" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" To="#686868" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" To="#282828" Duration="0:0:0.1" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.EnterActions>
+							<Trigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.2" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.ExitActions>
+						</Trigger>
+						<Trigger Property="IsFocused" Value="True">
+							<Trigger.EnterActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#989898" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" To="#787878" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" To="#383838" Duration="0:0:0.1" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.EnterActions>
+							<Trigger.ExitActions>
+								<BeginStoryboard>
+									<Storyboard>
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" Duration="0:0:0.1" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" Duration="0:0:0.2" />
+										<ColorAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" Duration="0:0:0.2" />
+									</Storyboard>
+								</BeginStoryboard>
+							</Trigger.ExitActions>
+						</Trigger>
+						<Trigger Property="IsPressed" Value="true">
+							<Setter TargetName="Content" Property="RenderTransform">
+								<Setter.Value>
+									<TranslateTransform Y="1" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="BackgroundSunken" Property="RenderTransform">
+								<Setter.Value>
+									<TranslateTransform Y="1" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="Background" Property="Opacity" Value="0" />
+							<Setter TargetName="BackgroundHighlighted" Property="Opacity" Value="1" />
+							<Setter TargetName="BackgroundSunken" Property="BorderBrush" Value="#555" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="#777"/>
+							<Setter Property="Opacity" Value="0.75"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
 	<!-- Checkbox style RadioButton -->
 
@@ -2040,123 +2242,7 @@
 	    <Setter Property="TextDecorations" Value="Underline" />
     </Style>
 
-    <!-- Brushes -->
-    <SolidColorBrush x:Key="InfoBarMessageBackgroundBrush" Color="Yellow" />
-    <SolidColorBrush x:Key="InfoBarMessageSeparatorBrush" Color="Black" />
-    <SolidColorBrush x:Key="InfoBarMessageErrorTextBackgroundBrush" Color="Yellow" />
-    <SolidColorBrush x:Key="InfoBarMessageErrorTextColorBrush" Color="Red" />
-    <SolidColorBrush x:Key="InfoBarMessageWarningTextColorBrush" Color="Orange" />
 
-    <Style x:Key="yourCustomStyleKey" TargetType="catel:InfoBarMessageControl">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type catel:InfoBarMessageControl}">
-                    <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Actual content -->
-                            <ContentPresenter Grid.Row="1" x:Name="actualContent" />
-
-                            <!-- Message bar, by default in-line (Grid.Row = 0) -->
-                            <StackPanel Grid.Row="0" x:Name="PART_MessageBar"
-                                            Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type catel:InfoBarMessageControl}}, Path=MessageCount, Converter={StaticResource CollectionToCollapsingVisibilityConverter}}"
-                                            Width="{Binding ElementName=actualContent, Path=ActualWidth}">
-
-                                <!-- Internal StackPanel, otherwise the whole control will have the background brush -->
-                                <StackPanel Background="{StaticResource InfoBarMessageBackgroundBrush}">
-                                    <!-- Actual text -->
-                                    <TextBlock Padding="4,2,4,2" Foreground="Black" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type catel:InfoBarMessageControl}}, Path=InfoMessage}" />
-
-                                    <!-- Line -->
-                                    <Line Name="infoBarSeparator" Margin="0" Stroke="{StaticResource InfoBarMessageSeparatorBrush}" 
-                                              X1="0" X2="1" Stretch="UniformToFill" />
-                                </StackPanel>
-
-                            </StackPanel>
-                        </Grid>
-
-                        <!-- Popup -->
-                        <Popup IsOpen="{Binding ElementName=PART_MessageBar, Path=IsMouseOver, Mode=OneWay}" 
-                               PlacementTarget="{Binding ElementName=infoBarSeparator}"
-                               Placement="Bottom" 
-							   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}"
-                               AllowsTransparency="True" PopupAnimation="Fade">
-                            <Grid Background="{StaticResource InfoBarMessageErrorTextBackgroundBrush}"
-								  DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type catel:InfoBarMessageControl}}}">
-
-                                <!-- Column definitions -->
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <!-- Row definitions -->
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-
-                                <!-- List of errors -->
-                                <ItemsControl Grid.Row="0" ItemsSource="{Binding ErrorMessageCollection}" Height="Auto" VerticalAlignment="Top"
-											  Visibility="{Binding ErrorMessageCollection.Count, Converter={StaticResource CollectionToCollapsingVisibilityConverter}}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <!-- Column definitions -->
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <!-- Content -->
-                                                <Image Grid.Column="0" Source="/Catel.MVVM;component/Resources/Images/Error.png" Margin="2,2,4,2" Width="16" Height="16"/>
-                                                <TextBlock Grid.Column="1" Foreground="{StaticResource InfoBarMessageErrorTextColorBrush}" Text="{Binding}" TextWrapping="Wrap" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-
-                                <!-- List of warnings -->
-                                <ItemsControl Grid.Row="1" ItemsSource="{Binding WarningMessageCollection}" Height="Auto" VerticalAlignment="Top" 
-											  Visibility="{Binding WarningMessageCollection.Count, Converter={StaticResource CollectionToCollapsingVisibilityConverter}}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <!-- Column definitions -->
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-
-                                                <!-- Content -->
-                                                <Image Grid.Column="0" Source="/Catel.MVVM;component/Resources/Images/Warning.png" Margin="2,2,4,2" Width="16" Height="16"/>
-                                                <TextBlock Grid.Column="1" Foreground="{StaticResource InfoBarMessageWarningTextColorBrush}" Text="{Binding}" TextWrapping="Wrap" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-
-                                <!-- Line -->
-                                <Line Grid.Row="2" Margin="0" Stroke="{StaticResource InfoBarMessageSeparatorBrush}" X1="0" X2="1" 
-                                      Stretch="UniformToFill" />
-
-                            </Grid>
-                        </Popup>
-
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
 	<Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
 		<Setter Property="Foreground" Value="#DDD"/>

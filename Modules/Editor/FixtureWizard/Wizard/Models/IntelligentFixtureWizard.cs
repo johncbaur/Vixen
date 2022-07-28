@@ -51,6 +51,8 @@
             MinSize = new System.Windows.Size(1100, 600);
             MaxSize = new System.Windows.Size(1400, 600);
             ResizeMode = System.Windows.ResizeMode.CanResize;            
+            // Have the wizard determine the space between the page ellipses
+            AutoSizeSideNavigationPane = true;
         }
 
         #endregion
