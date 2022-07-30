@@ -1,21 +1,22 @@
-﻿using VixenModules.Editor.FixtureWizard.Wizard.ViewModels;
+﻿using VixenModules.Editor.FixturePropertyEditor.ViewModels;
+using VixenModules.Editor.FixtureWizard.Wizard.ViewModels;
 
 namespace VixenModules.Editor.FixtureWizard.Wizard
 {
-	using Catel;
-	using Catel.IoC;
-	using Catel.Services;
-	using Orc.Wizard;
-	using System.Diagnostics;
-	using System.Linq;
-	using System.Threading.Tasks;
-	using VixenModules.Editor.FixtureWizard.Wizard.Models;
+    using Catel;
+    using Catel.IoC;
+    using Catel.Services;
+    using Orc.Wizard;
+    using System.Linq;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+    using VixenModules.Editor.FixtureWizard.Wizard.Models;
 
-	/// <summary>
-	/// Wizard for creating intelligent fixtures.
-	/// </summary>
-	/// <remarks>This class was created from the Catel Orc Wizard example</remarks>
-	public class IntelligentFixtureWizard : SideNavigationWizardBase, IFixtureWizard
+    /// <summary>
+    /// Wizard for creating intelligent fixtures.
+    /// </summary>
+    /// <remarks>This class was created from the Catel Orc Wizard example</remarks>
+    public class IntelligentFixtureWizard : SideNavigationWizardBase, IFixtureWizard
     {        
         #region Constructor
 
@@ -169,28 +170,6 @@ namespace VixenModules.Editor.FixtureWizard.Wizard
 
         #endregion
 
-        #region Private Methods
-
-        /// <summary>
-        /// Returns true if the current page is valid.
-        /// </summary>
-        /// <returns>True if the current page is valid</returns>
-        private bool IsCurrentPageValid()
-        {
-            bool isCurrentPageValid = true;
-
-	        // If the current page implements the IIntelligentFixtureWizardPageViewModel interface then...
-	        if (CurrentPage.ViewModel is IIntelligentFixtureWizardPageViewModel)
-	        {
-                // Ask the page if it safe to move back to the previous page
-                isCurrentPageValid &= ((IIntelligentFixtureWizardPageViewModel)CurrentPage.ViewModel).CanMoveBack();
-	        }
-
-	        return isCurrentPageValid;
-        }
-
-        #endregion
-
         #region protected Methods
 
         /// <summary>
@@ -203,10 +182,14 @@ namespace VixenModules.Editor.FixtureWizard.Wizard
                 // Call the base class implementation
 		        bool canMoveBack = base.CanMoveBack;
 
-                // Check to see if the current page contains valid data
-		        canMoveBack &= IsCurrentPageValid();
+                // If the current page implements the IIntelligentFixtureWizardPageViewModel interface then...
+                if (CurrentPage.ViewModel is IIntelligentFixtureWizardPageViewModel)
+                {
+                    // Ask the page if it safe to move back to the previous page
+	                canMoveBack &= ((IIntelligentFixtureWizardPageViewModel)CurrentPage.ViewModel).CanMoveBack();
+                }
 
-		        return canMoveBack;
+                return canMoveBack;
 	        }
         }
 
@@ -220,12 +203,17 @@ namespace VixenModules.Editor.FixtureWizard.Wizard
 		        // Call the base class implementation
 		        bool canMoveForward = base.CanMoveForward;
 
-                // Check to see if the current page contains valid data
-                canMoveForward &= IsCurrentPageValid();
+		        // If the current page implements the IIntelligentFixtureWizardPageViewModel interface then...
+		        if (CurrentPage.ViewModel is IIntelligentFixtureWizardPageViewModel)
+		        {
+			        // Ask the page if it safe to move back to the next page
+			        canMoveForward &= ((IIntelligentFixtureWizardPageViewModel)CurrentPage.ViewModel).CanMoveNext();
+		        }
 
-                return canMoveForward;
+		        return canMoveForward;
 	        }
         }
+
 
         #endregion
     }
