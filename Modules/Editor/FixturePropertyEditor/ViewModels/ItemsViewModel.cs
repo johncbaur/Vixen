@@ -98,7 +98,7 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 		/// <summary>
 		/// Deletes the currently selected item.
 		/// </summary>
-		protected void DeleteItem()
+		protected virtual void DeleteItem()
 		{
 			// If an item is selected then...
 			if (SelectedItem != null)
@@ -118,6 +118,9 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 				// Validate the view model
 				Validate(true);								
 			}
+
+			// Refresh command enable/disable status
+			RaiseCanExecuteChanged();
 		}
 
 		/// <summary>

@@ -30,6 +30,7 @@ using Point = System.Drawing.Point;
 using SystemFonts = System.Drawing.SystemFonts;
 using Timer = System.Windows.Forms.Timer;
 using WPFApplication = System.Windows.Application;
+using Orc.Theming;
 
 namespace VixenApplication
 {
@@ -75,7 +76,7 @@ namespace VixenApplication
             //Load up the common WPF them file for our WPF application parts.
             ResourceDictionary dict = new ResourceDictionary
 		    {
-		        Source = new Uri("/WPFCommon;component/Theme/Theme.xaml", UriKind.Relative),
+		        Source = new Uri("/WPFCommon;component/Theme/Theme.xaml", UriKind.Relative)
 		    };
 
 			// This resource dictionary is required by the Orc Wizard library
@@ -86,6 +87,9 @@ namespace VixenApplication
 
 			WPFApplication.Current.Resources.MergedDictionaries.Add(dictOrc);
 			WPFApplication.Current.Resources.MergedDictionaries.Add(dict);
+
+			// This call was part of the Orc Wizard example application but causes other negative side-effects
+			//StyleHelper.CreateStyleForwardersForDefaultStyles();
 
 			// Applies Orc Theme; This call makes the InfoBarMessageControl header bar readable in a dark theme
 			WPFApplication.Current.ApplyTheme();

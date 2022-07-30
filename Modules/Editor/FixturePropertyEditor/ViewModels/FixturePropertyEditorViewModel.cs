@@ -305,6 +305,7 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 			// If the name is empty then...
 			if (string.IsNullOrEmpty(Name))
             {
+				// Add an error
 				validationResults.Add(FieldValidationResult.CreateError(NameProperty, "Profile name is empty.  Profile is a required field."));
 			}
 
@@ -379,6 +380,25 @@ namespace VixenModules.Editor.FixturePropertyEditor.ViewModels
 			item.Name = "Zombie";
 			item.Function = "None";
 			item.CloseViewModelAsync(null);			
+		}
+
+		/// <summary>
+		/// Refer to base class documentation.
+		/// </summary>
+		protected override void DeleteItem()
+		{
+			// Call the base class implementation
+			base.DeleteItem();
+
+			// Loop over the remaining channel items
+			for(int index = 0; index < Items.Count; index++)
+			{
+				// Retrieve the specified channel
+				ChannelItemViewModel channel = Items[index];	
+
+				// Update the channel number to remove any gaps
+				channel.ChannelNumber = (index + 1).ToString();	
+			}
 		}
 
 		#endregion

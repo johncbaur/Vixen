@@ -82,6 +82,9 @@
     <Content Include="TabControlEX.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Catel.MVVM.dll">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FTD2XX_NET">
@@ -118,7 +121,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets></IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Catel.MVVM" Version="5.12.10" />
+    <PackageReference Include="Catel.MVVM" Version="5.12.10">
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
     <PackageReference Include="Catel.Serialization.Json" Version="5.12.10" />
    <PackageReference Include="DataGridThemes" Version="1.0.0" />
     <PackageReference Include="CSCore" Version="1.2.1.2" />

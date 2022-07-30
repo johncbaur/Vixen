@@ -2,7 +2,6 @@
 {
 	using Catel.Data;
 	using Catel.MVVM;
-	using Orc.Wizard;
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
@@ -11,10 +10,10 @@
 	using VixenModules.Editor.FixturePropertyEditor.ViewModels;
 	using VixenModules.Editor.FixtureWizard.Wizard.Models;
 
-    /// <summary>
+	/// <summary>
 	/// Wizard view model page for editing the profile's channels.
 	/// </summary>
-	public class EditProfileWizardPageViewModel : EditWizardPageViewModelBase<EditProfileWizardPage>
+	public class EditProfileWizardPageViewModel : EditWizardPageViewModelBase<EditProfileWizardPage>, IIntelligentFixtureWizardPageViewModel
     {
 		#region Constructor
 
@@ -22,7 +21,7 @@
         /// Constructor
         /// </summary>
         /// <param name="wizardPage">Edit profile wizard page model</param>
-		public EditProfileWizardPageViewModel(EditProfileWizardPage wizardPage) :
+        public EditProfileWizardPageViewModel(EditProfileWizardPage wizardPage) :
             base(wizardPage)
         {
             // Retrieve the select profile wizard page model
@@ -32,7 +31,7 @@
             FixtureSpecification = new Tuple<FixtureSpecification, Action, bool>(selectProfilePage.Fixture, RefreshCanSave, false);
 
             // Configure Catel to validate immediately
-            DeferValidationUntilFirstSaveCall = false;                       
+            DeferValidationUntilFirstSaveCall = false;
         }
 
 		#endregion
@@ -74,7 +73,7 @@
 
             // Retreive the fixture property editor view model
             FixturePropertyEditorViewModel fixtureEditor = (FixturePropertyEditorViewModel)childViewModels.Single(vm => vm is FixturePropertyEditorViewModel);
-            
+
             // Retrieve the fixture profile from the view model
             FixtureSpecification fixtureSpecification = fixtureEditor.GetFixtureSpecification();
 
@@ -90,7 +89,63 @@
             // Call the base class implementation
             return base.SaveAsync();
         }
-               
+
         #endregion
-    }
+
+        #region Private Methods
+
+        /// <summary>
+        /// Returns true if the page contains valid and complete data.
+        /// </summary>
+        /// <returns>True if the page contains valid and complete data</returns>
+        private bool IsPageValid()
+        {
+	        bool isPageValid = true;
+
+	        // Get the child view models
+	        IEnumerable<IViewModel> childViewModels = this.GetChildViewModels();
+
+	        // If the child view models have been created then...
+	        if (childViewModels.Count() > 0)
+	        {
+		        // Retreive the fixture property editor view model
+		        FixturePropertyEditorViewModel fixtureEditor =
+			        (FixturePropertyEditorViewModel)childViewModels.SingleOrDefault(vm => vm is FixturePropertyEditorViewModel);
+
+		        // If the fixture editor view model was found then...
+		        if (fixtureEditor != null)
+		        {
+			        // Get the validation results from the fixture editor view model
+			        string results = fixtureEditor.GetValidationResults();
+
+			        // Only allow the user to go to the previous page if the current page is valid
+			        isPageValid = string.IsNullOrEmpty(results);
+		        }
+	        }
+
+	        return isPageValid;
+        }
+
+        #endregion
+
+        #region IIntelligentFixtureWizardPageViewModel
+
+        /// <summary>
+        /// Refer to interface documentation.
+        /// </summary>
+        public bool CanMoveBack()
+        {
+	        return IsPageValid();
+        }
+
+        /// <summary>
+        /// Refer to interface documentation.
+        /// </summary>
+        public bool CanMoveNext()
+        {
+	        return IsPageValid();
+        }
+
+        #endregion
+	}
 }

@@ -36,13 +36,16 @@
                 Fixtures.Add(fixture.Name);
             }            
 
-            // If there is at least one fixture then...
-            if (Fixtures.Count > 0)
+            // If the wizard page is configured to selet an existing fixture and
+            // there is at least one fixture then...
+            if (wizardPage.SelectExistingProfile && Fixtures.Count > 0)
             {
                 // Default the radio button to select an existing fixture profile
                 SelectExistingProfile = true;
             }            
-            else
+            // Otherwise if the profile has not already been named then...
+            else if (string.IsNullOrEmpty(wizardPage.ProfileName) &&
+                     Fixture == null)
             {
                 // Otherwise default to creating a new fixture profile
                 CreateNewProfile = true;
@@ -181,7 +184,7 @@
             }
             set 
             { 
-                SetValue(CreateNewProfileProperty, value);                 
+                SetValue(CreateNewProfileProperty, value);
 
                 // If creating a new fixture profile then...
                 if (value)

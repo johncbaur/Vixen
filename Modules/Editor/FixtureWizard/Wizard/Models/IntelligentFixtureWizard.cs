@@ -1,19 +1,21 @@
-﻿namespace VixenModules.Editor.FixtureWizard.Wizard
-{
-    using Catel;
-    using Catel.IoC;
-    using Catel.Services;
-    using Orc.Wizard;
-    using System.Linq;
-    using System.Diagnostics;
-    using System.Threading.Tasks;
-    using VixenModules.Editor.FixtureWizard.Wizard.Models;
+﻿using VixenModules.Editor.FixtureWizard.Wizard.ViewModels;
 
-    /// <summary>
-    /// Wizard for creating intelligent fixtures.
-    /// </summary>
-    /// <remarks>This class was created from the Catel Orc Wizard example</remarks>
-    public class IntelligentFixtureWizard : SideNavigationWizardBase, IFixtureWizard
+namespace VixenModules.Editor.FixtureWizard.Wizard
+{
+	using Catel;
+	using Catel.IoC;
+	using Catel.Services;
+	using Orc.Wizard;
+	using System.Diagnostics;
+	using System.Linq;
+	using System.Threading.Tasks;
+	using VixenModules.Editor.FixtureWizard.Wizard.Models;
+
+	/// <summary>
+	/// Wizard for creating intelligent fixtures.
+	/// </summary>
+	/// <remarks>This class was created from the Catel Orc Wizard example</remarks>
+	public class IntelligentFixtureWizard : SideNavigationWizardBase, IFixtureWizard
     {        
         #region Constructor
 
@@ -50,7 +52,8 @@
             // Configure the size of the wizard
             MinSize = new System.Windows.Size(1100, 600);
             MaxSize = new System.Windows.Size(1400, 600);
-            ResizeMode = System.Windows.ResizeMode.CanResize;            
+            ResizeMode = System.Windows.ResizeMode.CanResize;
+
             // Have the wizard determine the space between the page ellipses
             AutoSizeSideNavigationPane = true;
         }
@@ -162,6 +165,66 @@
 
             // Re-evaluate the navigation commands
             NavigationController.EvaluateNavigationCommands();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Returns true if the current page is valid.
+        /// </summary>
+        /// <returns>True if the current page is valid</returns>
+        private bool IsCurrentPageValid()
+        {
+            bool isCurrentPageValid = true;
+
+	        // If the current page implements the IIntelligentFixtureWizardPageViewModel interface then...
+	        if (CurrentPage.ViewModel is IIntelligentFixtureWizardPageViewModel)
+	        {
+                // Ask the page if it safe to move back to the previous page
+                isCurrentPageValid &= ((IIntelligentFixtureWizardPageViewModel)CurrentPage.ViewModel).CanMoveBack();
+	        }
+
+	        return isCurrentPageValid;
+        }
+
+        #endregion
+
+        #region protected Methods
+
+        /// <summary>
+        /// Refer to base class documentation.
+        /// </summary>
+        public override bool CanMoveBack
+        {
+	        get
+	        {
+                // Call the base class implementation
+		        bool canMoveBack = base.CanMoveBack;
+
+                // Check to see if the current page contains valid data
+		        canMoveBack &= IsCurrentPageValid();
+
+		        return canMoveBack;
+	        }
+        }
+
+        /// <summary>
+        /// Refer to base class documentation.
+        /// </summary>
+        public override bool CanMoveForward
+        {
+	        get
+	        {
+		        // Call the base class implementation
+		        bool canMoveForward = base.CanMoveForward;
+
+                // Check to see if the current page contains valid data
+                canMoveForward &= IsCurrentPageValid();
+
+                return canMoveForward;
+	        }
         }
 
         #endregion

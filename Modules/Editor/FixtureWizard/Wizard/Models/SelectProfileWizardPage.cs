@@ -17,6 +17,9 @@ namespace VixenModules.Editor.FixtureWizard.Wizard.Models
         {
             Title = "Select Profile";
             Description = "Select or create the profile for the fixture(s).";
+
+            // Default to selecting an existing fixture
+            SelectExistingProfile = true;
         }
 
 		#endregion
